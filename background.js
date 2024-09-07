@@ -1,3 +1,7 @@
+chrome.runtime.onStartup.addListener(function () {
+  chrome.storage.local.clear(function () {});
+});
+
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     const requestData = {
@@ -12,7 +16,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       requestsToLLMs: 0,
       consumptionOfWebpages: 0,
       consumptionOfLLMs: 0,
-      //requests: [],
+      requests: [],
     };
     chrome.storage.local.get(
       { permamentStorage: tempStorage },
@@ -21,16 +25,16 @@ chrome.webRequest.onBeforeRequest.addListener(
         permamentStorage.httpRequestsMade++;
         if (details.url.includes("chatgpt") || details.url.includes("gemini")) {
           permamentStorage.requestsToLLMs++;
-          permamentStorage.consumptionOfLLMs +=
-            4.76 + Math.random() * 0.5 - 0.25;
+          permamentStorage.consumptionOfLLMs += 0.476 + Math.random() * 0.05;
         } else {
           if (details.method === "GET") {
             permamentStorage.requestsToWebpages++;
             permamentStorage.consumptionOfWebpages +=
-              1.74 + Math.random() * 0.5 - 0.25;
+              0.174 + Math.random() * 0.5;
           }
         }
-        //permamentStorage.requests.push(requestData);
+
+        permamentStorage.requests.push(requestData);
         chrome.storage.local.set({ permamentStorage: permamentStorage });
       }
     );
