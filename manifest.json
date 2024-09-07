@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Network Logger",
+  "version": "1.0",
+  "permissions": ["declarativeNetRequest", "webNavigation", "storage"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["style.css"]
+    }
+  ]
+}
