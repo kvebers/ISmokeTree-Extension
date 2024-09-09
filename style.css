@@ -1,0 +1,38 @@
+body {
+  width: 300px;
+  height: 440px;
+  text-align: center;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.center {
+  text-align: center;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+#charts {
+  margin: 0 auto;
+  display: block;
+  width: 200px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+tr {
+  text-align: center;
+}
+
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
