@@ -12,17 +12,3 @@
   height: 200px;
   box-sizing: border-box;
 }
-table {
-  margin: 0 auto;
-  border-collapse: collapse;
-}
-
-tr {
-  text-align: center;
-}
-
-td {
-  border: 1px solid black;
-  padding: 8px;
-  text-align: center;
-}

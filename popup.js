@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.arc(
         canvas.width / 2,
         canvas.height / 2,
-        canvas.width / 4,
+        canvas.width / 4.4,
         0,
         2 * Math.PI
       );
@@ -46,31 +46,47 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.fill();
     };
 
-    const drawOutline = (ctx) => {
+    const drawOutline = (ctx, size) => {
       ctx.beginPath();
-      ctx.arc(
-        canvas.width / 2,
-        canvas.height / 2,
-        canvas.width / 2,
-        0,
-        2 * Math.PI
-      );
+      ctx.arc(canvas.width / 2, canvas.height / 2, size, 0, 2 * Math.PI);
       ctx.fillStyle = "#000000";
       ctx.fill();
     };
 
+    const drawRandomNumber = (ctx) => {
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "black";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(
+        (Math.round(totalConsumption) / 1000).toString() + " Kg CO2",
+        canvas.width / 2,
+        canvas.height / 2
+      );
+    };
+
     const drawTable = (permamentStorage) => {
-      const tableContainer = document.getElementById("table");
+      const tableContainer = document.getElementById("tableExtension");
 
       // Create the table and table body
       const table = document.createElement("table");
+      table.margin = "0 auto";
+      table.borderCollapse = "collapse";
       const tableBody = document.createElement("tbody");
       // Helper function to create a row
       const createRow = (label, value, color) => {
         const row = document.createElement("tr");
+        row.textAlign = "center";
         row.backgroundColor = color;
         const labelCell = document.createElement("td");
+        labelCell.style.border = "1px solid black";
+        labelCell.style.padding = "8px";
+        labelCell.style.textAlign = "center";
         const valueCell = document.createElement("td");
+        valueCell.style.border = "1px solid black";
+        valueCell.style.padding = "8px";
+        valueCell.style.textAlign = "center";
+
         labelCell.textContent = label;
         valueCell.textContent = value;
         row.appendChild(labelCell);
@@ -120,9 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
       tableContainer.appendChild(table);
     };
 
-    drawOutline(ctx);
+    drawOutline(ctx, canvas.width / 2);
     drawPieChart(ctx, [llmConsumption, webConsumption]);
+    drawOutline(ctx, canvas.width / 4);
     drawWhiteCircle(ctx);
+    drawRandomNumber(ctx);
     drawTable(permamentStorage);
   });
 });
