@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const ctx = canvas.getContext("2d");
   canvas.width = 200;
   canvas.height = 200;
+  const colors = ["#CCCC00", "#999900"];
 
   chrome.storage.local.get({ permamentStorage: {} }, function (result) {
     const permamentStorage = result.permamentStorage || {};
@@ -10,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const webConsumption = permamentStorage.consumptionOfWebpages || 1;
     const totalConsumption = llmConsumption + webConsumption;
     const drawPieChart = (ctx, data) => {
-      const colors = ["#CCCC00", "#999900"];
       const startAngle = 0;
       let currentAngle = startAngle;
       data.forEach((value, index) => {
@@ -66,8 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
       // Helper function to create a row
-      const createRow = (label, value) => {
+      const createRow = (label, value, color) => {
         const row = document.createElement("tr");
+        row.backgroundColor = color;
         const labelCell = document.createElement("td");
         const valueCell = document.createElement("td");
         labelCell.textContent = label;
@@ -81,33 +82,38 @@ document.addEventListener("DOMContentLoaded", function () {
           "Consumption of requests",
           (
             Math.round(permamentStorage.consumptionOfWebpages) / 1000
-          ).toString() + " Kg of CO2"
+          ).toString() + " Kg of CO2",
+          colors[1]
         )
       );
       tableBody.appendChild(
         createRow(
           "Consumption of LLMs",
           (Math.round(permamentStorage.consumptionOfLLMs) / 1000).toString() +
-            " Kg of CO2"
+            " Kg of CO2",
+          colors[0]
         )
       );
       tableBody.appendChild(
         createRow(
           "Requests made",
-          Math.round(permamentStorage.httpRequestsMade).toString()
+          Math.round(permamentStorage.httpRequestsMade).toString(),
+          "white"
         )
       );
       tableBody.appendChild(
         createRow(
           "Requests to LLMs",
-          Math.round(permamentStorage.requestsToLLMs).toString()
+          Math.round(permamentStorage.requestsToLLMs).toString(),
+          "white"
         )
       );
       tableBody.appendChild(
         createRow(
           "Trees smoked",
           (Math.round(totalConsumption) / 25000).toFixed(3).toString() +
-            " tree years"
+            " tree years",
+          "white"
         )
       );
       table.appendChild(tableBody);
@@ -118,21 +124,5 @@ document.addEventListener("DOMContentLoaded", function () {
     drawPieChart(ctx, [llmConsumption, webConsumption]);
     drawWhiteCircle(ctx);
     drawTable(permamentStorage);
-  });
-
-  const clearButton = document.getElementById("clearButton");
-  clearButton.addEventListener("click", function () {
-    chrome.storage.local.clear(function () {
-      chrome.storage.local.get({ permamentStorage: {} }, function (result) {
-        const permamentStorage = result.permamentStorage || {};
-        permamentStorage.httpRequestsMade = 0;
-        permamentStorage.requestsToWebpages = 0;
-        permamentStorage.requestsToLLMs = 0;
-        permamentStorage.consumptionOfWebpages = 0;
-        permamentStorage.consumptionOfLLMs = 0;
-        permamentStorage.previousWebsite = "";
-        chrome.storage.local.set({ permamentStorage: permamentStorage });
-      });
-    });
   });
 });
