@@ -54,12 +54,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     const drawRandomNumber = (ctx) => {
-      ctx.font = "14px Arial";
+      ctx.font = "12px Arial";
       ctx.fillStyle = "black";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(
-        (Math.round(totalConsumption) / 1000).toString() + " Kg CO2",
+        (Math.round(totalConsumption) / 1000).toString() + " Kg Co2",
         canvas.width / 2,
         canvas.height / 2
       );
