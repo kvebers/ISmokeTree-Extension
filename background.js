@@ -13,7 +13,6 @@ chrome.webRequest.onBeforeRequest.addListener(
       requestsToLLMs: 0,
       consumptionOfWebpages: 0,
       consumptionOfLLMs: 0,
-      previousWebsite: "",
       lastTime: 0,
     };
 
@@ -37,9 +36,7 @@ chrome.webRequest.onBeforeRequest.addListener(
         } else {
           if (details.method === "GET") {
             permamentStorage.previousWebsite = details.url;
-            permamentStorage.requestsToWebpages++;
-            permamentStorage.consumptionOfWebpages +=
-              1.74 + Math.random() * 0.5;
+            permamentStorage.consumptionOfWebpages += 0.03;
           }
         }
 
