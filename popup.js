@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.arc(
           canvas.width / 2,
           canvas.height / 2,
-          canvas.width / 2,
+          canvas.width / 2.1,
           currentAngle,
           endAngle
         );
@@ -46,6 +46,19 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.fill();
     };
 
+    const drawOutline = (ctx) => {
+      ctx.beginPath();
+      ctx.arc(
+        canvas.width / 2,
+        canvas.height / 2,
+        canvas.width / 2,
+        0,
+        2 * Math.PI
+      );
+      ctx.fillStyle = "#000000";
+      ctx.fill();
+    };
+
     const drawTable = (permamentStorage) => {
       const tableContainer = document.getElementById("table");
 
@@ -65,18 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       tableBody.appendChild(
         createRow(
-          "Requests made",
-          Math.round(permamentStorage.httpRequestsMade).toString()
-        )
-      );
-      tableBody.appendChild(
-        createRow(
-          "Requests to LLMs",
-          Math.round(permamentStorage.requestsToLLMs).toString()
-        )
-      );
-      tableBody.appendChild(
-        createRow(
           "Consumption of requests",
           (
             Math.round(permamentStorage.consumptionOfWebpages) / 1000
@@ -92,6 +93,18 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       tableBody.appendChild(
         createRow(
+          "Requests made",
+          Math.round(permamentStorage.httpRequestsMade).toString()
+        )
+      );
+      tableBody.appendChild(
+        createRow(
+          "Requests to LLMs",
+          Math.round(permamentStorage.requestsToLLMs).toString()
+        )
+      );
+      tableBody.appendChild(
+        createRow(
           "Trees smoked",
           (Math.round(totalConsumption) / 25000).toFixed(3).toString() +
             " tree years"
@@ -101,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
       tableContainer.appendChild(table);
     };
 
+    drawOutline(ctx);
     drawPieChart(ctx, [llmConsumption, webConsumption]);
     drawWhiteCircle(ctx);
     drawTable(permamentStorage);

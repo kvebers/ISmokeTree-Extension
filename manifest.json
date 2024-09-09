@@ -1,14 +1,25 @@
 {
   "manifest_version": 2,
-  "name": "Network Logger",
+  "name": "I Smoke Trees",
   "version": "1.0",
   "permissions": ["webRequest", "webRequestBlocking", "*://*/*", "storage"],
   "background": {
     "scripts": ["background.js"],
     "persistent": true
   },
+
   "browser_action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "content_scripts": [
     {
